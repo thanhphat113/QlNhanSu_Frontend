@@ -11,8 +11,10 @@ import Table from "../../Table";
 function FormUpdateDD({ userId, setSelectedCheck }) {
     const thead = [
         "Id",
+        "Ngày tạo",
         "Thời gian bắt đầu",
         "Thời gian kết thúc",
+        "Ca làm",
         "Đánh giá",
         "Quản lý đã chỉnh sửa",
     ];
@@ -26,6 +28,7 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
                 const response = await Api.get("api/DiemDanh/list-by-user-id", {
                     params: { value: userId },
                 });
+                console.log(response.data.results)
                 setDiemDanhs(response.data.results);
             } catch (error) {
                 handleErrorResponse(error);
@@ -41,7 +44,7 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
             )[0];
             formik.setFieldValue("idDiemDanh", item.idDiemDanh);
             formik.setFieldValue("thoiGianBatDau", item.thoiGianBatDau.split(".")[0]);
-            formik.setFieldValue("thoiGianKetThuc", item.thoiGianKetThuc.split(".")[0]);
+            formik.setFieldValue("thoiGianKetThuc", item.thoiGianKetThuc !== null ? item.thoiGianKetThuc.split(".")[0] : "");
             formik.setFieldValue("ghiChu", item.ghiChu || "");
 
         }
@@ -74,14 +77,14 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
 					item.idDiemDanh === result.diemdanh.idDiemDanh ? result.diemdanh : item
 				)
 			);
+            console.log()
 		} catch (error) {
 			handleErrorResponse(error)
 		}
 	}
-
     return (
         <div className="grid  relative grid-cols-3 gap-5 p-10">
-            <div className="h-[50rem] col-span-2 border">
+            <div className="h-[50rem] col-span-2 border overflow-x-auto">
                 <Table thead={thead}>
                     {diemDanhs &&
                         diemDanhs.map((item) => (
@@ -91,8 +94,10 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
                                 onClick={() => setSelected(item.idDiemDanh)}
                             >
                                 <td>{item.idDiemDanh}</td>
+                                <td>{item.ngayTao}</td>
                                 <td>{item.thoiGianBatDau.split(".")[0]}</td>
-                                <td>{item.thoiGianKetThuc.split(".")[0]}</td>
+                                <td>{item.thoiGianKetThuc?.split(".")[0] || ""}</td>
+                                <td>{item.idCaLamNavigation?.tenCaLam}</td>
                                 <td
                                     className={`${
                                         item.danhGia === "Đúng giờ" ||
@@ -116,7 +121,7 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
             ></i>
             <form
                 onSubmit={formik.handleSubmit}
-                className=" flex flex-col gap-7 w-[40rem]"
+                className=" flex flex-col gap-7 ms-7 w-[40rem]"
             >
                 <div>
                     <h1 className="text-center text-5xl font-bold">

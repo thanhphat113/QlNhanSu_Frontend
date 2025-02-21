@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import moment from 'moment';
-
+import moment from "moment";
 
 import FormCheckIn from "../../Form/FormCheckIn/Index";
 import ActionButton from "../../Button/ActionButton/Index";
@@ -41,6 +40,7 @@ function ChamCong() {
                         params: { value: user.idNhanVien },
                     }
                 );
+                console.log(response.data.results);
                 setLastCheckIn(response.data.lastCheckIn);
                 setCheckIns(response.data.results);
             } catch (error) {
@@ -50,17 +50,6 @@ function ChamCong() {
 
         checkIns.length === 0 && getCheckIns();
     }, []);
-
-    const convertToVietnamTime = (utcDateString) => {
-        if  (!utcDateString) return ""
-        return moment(utcDateString.split('.')[0]).format("hh:mm:ss")
-
-        // if (utcDateString === null) {
-        //     return "";
-        // }
-        // const date = new Date(utcDateString);
-        // return date.toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" });
-    };
 
     const convertToVietnamDate = (utcDateString) => {
         const date = new Date(utcDateString);
@@ -87,9 +76,13 @@ function ChamCong() {
                         return (
                             <tr
                                 key={item.idDiemDanh}
-                                className="odd:bg-gray-100 even:bg-white h-[4rem]"
+                                className={`odd:bg-gray-100 even:bg-white h-[4rem] ${
+                                    !item.hopLe && "text-red-700"
+                                }`}
                             >
-                                <td className="px-5 whitespace-nowrap">{item.idDiemDanh}</td>
+                                <td className="px-5 whitespace-nowrap">
+                                    {item.idDiemDanh}
+                                </td>
                                 <td className="px-5 whitespace-nowrap">
                                     {item.thoiGianBatDau.split(".")[0]}
                                 </td>
@@ -99,20 +92,24 @@ function ChamCong() {
                                 <td className="px-5 whitespace-nowrap">
                                     {item.thoiGianKetThuc?.split(".")[0]}
                                 </td>
-                                <td className="px-5 whitespace-nowrap">{item.veSom}</td>
-                                <td className="px-5 whitespace-nowrap">{convertToVietnamDate(item.ngayTao)}</td>
-                                <td className="px-5 whitespace-nowrap">{item.idCaLamNavigation?.tenCaLam}</td>
-                                <td className="px-5 whitespace-nowrap">{item.ghiChu}</td>
-                                <td
-                                    className={`${
-                                        item.danhGia === "Đúng giờ" || item.danhGia === "Check-in đúng giờ" || item.danhGia === "Check-in đúng giờ - Check-out đúng giờ"
-                                            ? "text-green-700"
-                                            : "text-red-700"
-                                    } px-5 whitespace-nowrap`}
-                                >
+                                <td className="px-5 whitespace-nowrap">
+                                    {item.veSom}
+                                </td>
+                                <td className="px-5 whitespace-nowrap">
+                                    {convertToVietnamDate(item.ngayTao)}
+                                </td>
+                                <td className="px-5 whitespace-nowrap">
+                                    {item.idCaLamNavigation?.tenCaLam}
+                                </td>
+                                <td className="px-5 whitespace-nowrap">
+                                    {item.ghiChu}
+                                </td>
+                                <td className=" px-5 whitespace-nowrap">
                                     {item.danhGia || "Chưa check-out"}{" "}
                                 </td>
-                                <td className="px-5 whitespace-nowrap">{item.tenQL || "Không có chỉnh sửa"}</td>
+                                <td className="px-5 whitespace-nowrap">
+                                    {item.tenQL || "Không có chỉnh sửa"}
+                                </td>
                             </tr>
                         );
                     })}

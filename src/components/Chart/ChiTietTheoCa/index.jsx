@@ -17,27 +17,24 @@ function ChiTietTheoCa({ data }) {
     const format = getDayOfWeek(data?.data);
 
     const formatData = format?.map((item) => {
-        const checkIn = item.thoiGianBatDau - data.batDau;
-        const checkOut = data.ketThuc - item.thoiGianKetThuc;
+        
 
-        if (checkIn > 0 || checkOut > 0) {
+        if (item.hopLe) {
             return {
                 day: item.day,
                 start: item.thoiGianKetThuc ? item.thoiGianBatDau : null,
-                heightIsVerify: item.thoiGianKetThuc ? 0 : null,
-                heightIsNotVerify: item.thoiGianKetThuc
-                    ? Math.round(
+                heightIsNotVerify: item.thoiGianKetThuc ? 0 : null,
+                heightIsVerify:Math.round(
                           (item.thoiGianKetThuc - item.thoiGianBatDau) * 100
                       ) / 100
-                    : null,
             };
         }
 
         return {
             day: item.day,
             start: item.thoiGianKetThuc ? item.thoiGianBatDau : null,
-            heightIsNotVerify: item.thoiGianKetThuc ? 0 : null,
-            heightIsVerify: item.thoiGianKetThuc
+            heightIsVerify: item.thoiGianKetThuc ? 0 : null,
+            heightIsNotVerify: item.thoiGianKetThuc
                 ? Math.round(
                       (item.thoiGianKetThuc - item.thoiGianBatDau) * 100
                   ) / 100
