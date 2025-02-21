@@ -46,7 +46,7 @@ function FormTKTN({setThongKes}) {
                         value={formik.values.ngayBd}
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        className=" border ps-2"
+                        className=" border ps-2 bg-white"
                     />
                     {formik.errors.ngayBd && formik.touched.ngayBd && (
                         <p className="text-red-500 text-2xl mt-1">
@@ -63,7 +63,7 @@ function FormTKTN({setThongKes}) {
                         value={formik.values.ngayKt}
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        className=" flex-1 border ps-2"
+                        className=" flex-1 border ps-2 bg-white"
                     />
                     {formik.errors.ngayKt && formik.touched.ngayKt && (
                         <p className="text-red-500 text-2xl mt-1">

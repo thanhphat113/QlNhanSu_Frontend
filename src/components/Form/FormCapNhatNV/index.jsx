@@ -100,7 +100,7 @@ function FormCapNhatNV({ user, setIsToggle, users, setUsers, setSelected }) {
     useEffect(() => {
         const getValues = async () => {
             try {
-                const response = await axios.get("/api/ChucVuVaVaiTro");
+                const response = await Api.get("/api/ChucVuVaVaiTro");
                 setValues(response.data);
             } catch (error) {
                 handleErrorResponse(error);
@@ -210,7 +210,7 @@ function FormCapNhatNV({ user, setIsToggle, users, setUsers, setSelected }) {
                         value={formik.values.idVaiTro}
                         onChange={formik.handleChange}
                     >
-                        {values.vaitros.map((item, index) => (
+                        {values.vaitros?.map((item, index) => (
                             <option key={index} value={item.idVaiTro}>
                                 {item.tenVaiTro} (
                                 {item.idQuyens

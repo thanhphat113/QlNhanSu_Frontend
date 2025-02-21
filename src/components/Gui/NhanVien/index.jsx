@@ -81,7 +81,7 @@ function NhanVien() {
                     {tbody.map((item) => (
                         <tr
                             key={item.idNhanVien}
-                            className="odd:bg-gray-100 even:bg-white h-[4rem] hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+                            className="odd:bg-gray-100 even:bg-white h-[4rem] hover:border-2"
                         >
                             <td className="px-5 whitespace-nowrap">
                                 {item.idNhanVien}

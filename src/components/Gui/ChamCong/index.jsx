@@ -76,7 +76,7 @@ function ChamCong() {
                         return (
                             <tr
                                 key={item.idDiemDanh}
-                                className={`odd:bg-gray-100 even:bg-white h-[4rem] ${
+                                className={`odd:bg-gray-100 even:bg-white h-[4rem] hover:border-2 border-black ${
                                     !item.hopLe && "text-red-700"
                                 }`}
                             >

@@ -1,7 +1,7 @@
 function Table({ thead, children,id }) {
     return (
         <table id={id} className=" text-center min-w-full">
-            <thead className="bg-black text-white h-[4rem]">
+            <thead className="bg-black text-white h-[4rem] border-2 border-black">
                 <tr>
                     {thead.map((item, index) => (
                         <td className="whitespace-nowrap px-5" key={index}>{item}</td>

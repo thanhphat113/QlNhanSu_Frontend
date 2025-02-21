@@ -15,6 +15,8 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
         "Thời gian bắt đầu",
         "Thời gian kết thúc",
         "Ca làm",
+        "Bắt đầu ca",
+        "Kết thúc ca",
         "Đánh giá",
         "Quản lý đã chỉnh sửa",
     ];
@@ -28,7 +30,6 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
                 const response = await Api.get("api/DiemDanh/list-by-user-id", {
                     params: { value: userId },
                 });
-                console.log(response.data.results)
                 setDiemDanhs(response.data.results);
             } catch (error) {
                 handleErrorResponse(error);
@@ -46,7 +47,6 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
             formik.setFieldValue("thoiGianBatDau", item.thoiGianBatDau.split(".")[0]);
             formik.setFieldValue("thoiGianKetThuc", item.thoiGianKetThuc !== null ? item.thoiGianKetThuc.split(".")[0] : "");
             formik.setFieldValue("ghiChu", item.ghiChu || "");
-
         }
     }, [selected]);
 
@@ -84,12 +84,12 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
 	}
     return (
         <div className="grid  relative grid-cols-3 gap-5 p-10">
-            <div className="h-[50rem] col-span-2 border overflow-x-auto">
+            <div className="h-[50rem] col-span-2 border overflow-x-auto shadow-[0_0_10px_rgba(0,0,0,0.3)] rounded-2xl">
                 <Table thead={thead}>
                     {diemDanhs &&
                         diemDanhs.map((item) => (
                             <tr
-                                className="odd:bg-gray-100 even:bg-white h-[4rem] cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.3)]"
+                                className={`odd:bg-gray-100 even:bg-white h-[4rem] cursor-pointer hover:shadow-[0_0_10px_rgba(0,0,0,0.3)] ${!item.hopLe && "text-red-700"}`}
                                 key={item.idDiemDanh}
                                 onClick={() => setSelected(item.idDiemDanh)}
                             >
@@ -98,15 +98,10 @@ function FormUpdateDD({ userId, setSelectedCheck }) {
                                 <td>{item.thoiGianBatDau.split(".")[0]}</td>
                                 <td>{item.thoiGianKetThuc?.split(".")[0] || ""}</td>
                                 <td>{item.idCaLamNavigation?.tenCaLam}</td>
+                                <td>{item.idCaLamNavigation?.thoiGianBatDau}</td>
+                                <td>{item.idCaLamNavigation?.thoiGianKetThuc}</td>
                                 <td
-                                    className={`${
-                                        item.danhGia === "Đúng giờ" ||
-                                        item.danhGia === "Check-in đúng giờ" ||
-                                        item.danhGia ===
-                                            "Check-in đúng giờ - Check-out đúng giờ"
-                                            ? "text-green-700"
-                                            : "text-red-700"
-                                    } px-5 whitespace-nowrap`}
+                                    className="px-5 whitespace-nowrap"
                                 >
                                     {item.danhGia}
                                 </td>
